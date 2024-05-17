@@ -12,6 +12,8 @@ createCertificatOrg2() {
   echo "Enroll the CA admin"
 
   fabric-ca-client enroll -u https://admin:adminpw@localhost:8054 --caname ca.org2.example.com --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
+  mv "$(pwd)/crypto-config-ca/peerOrganizations/org2.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org2.example.com/msp/keystore/priv_sk"
+
 }
 nodeOrgUnits() {
 

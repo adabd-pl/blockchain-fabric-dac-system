@@ -1,0 +1,231 @@
+{
+  "vertices" : [ {
+    "id" : "zone0:wyatt.feest",
+    "type" : "user"
+  }, {
+    "id" : "zone0:emory.skiles",
+    "type" : "user"
+  }, {
+    "id" : "zone1:theola.gusikowski",
+    "type" : "user"
+  }, {
+    "id" : "zone1:Brian Turnpike",
+    "type" : "space"
+  }, {
+    "id" : "zone0:Murrayville",
+    "type" : "provider"
+  }, {
+    "id" : "zone1:lyman.leuschke",
+    "type" : "user"
+  }, {
+    "id" : "zone2:Antwan Field",
+    "type" : "space"
+  }, {
+    "id" : "zone0:earle.bauch",
+    "type" : "user"
+  }, {
+    "id" : "zone1:et_praesentium",
+    "type" : "group"
+  }, {
+    "id" : "zone1:Lake Josiefort",
+    "type" : "provider"
+  }, {
+    "id" : "zone1:lois.ohara",
+    "type" : "user"
+  }, {
+    "id" : "zone1:saepe_aut",
+    "type" : "group"
+  }, {
+    "id" : "zone1:Isaias Cape",
+    "type" : "space"
+  }, {
+    "id" : "zone0:terrell.koch",
+    "type" : "user"
+  }, {
+    "id" : "zone0:sid.lindgren",
+    "type" : "user"
+  }, {
+    "id" : "zone1:donte.hackett",
+    "type" : "user"
+  }, {
+    "id" : "zone0:edmund.lesch",
+    "type" : "user"
+  }, {
+    "id" : "zone1:monty.ward",
+    "type" : "user"
+  }, {
+    "id" : "zone1:karl.mertz",
+    "type" : "user"
+  }, {
+    "id" : "zone2:coralie.williamson",
+    "type" : "user"
+  }, {
+    "id" : "zone1:jerold.murray",
+    "type" : "user"
+  }, {
+    "id" : "zone1:norman.roob",
+    "type" : "user"
+  }, {
+    "id" : "zone1:danna.waters",
+    "type" : "user"
+  }, {
+    "id" : "zone1:dalila.mclaughlin",
+    "type" : "user"
+  }, {
+    "id" : "zone0:Guy Plain",
+    "type" : "space"
+  }, {
+    "id" : "zone2:debera.moore",
+    "type" : "user"
+  }, {
+    "id" : "zone0:gregorio.hodkiewicz",
+    "type" : "user"
+  }, {
+    "id" : "zone1:blair.bednar",
+    "type" : "user"
+  }, {
+    "id" : "zone0:rodger.crooks",
+    "type" : "user"
+  }, {
+    "id" : "zone2:margit.miller",
+    "type" : "user"
+  }, {
+    "id" : "zone0:nicolas.vonrueden",
+    "type" : "user"
+  }, {
+    "id" : "zone2:Brekke Gardens",
+    "type" : "space"
+  }, {
+    "id" : "zone1:rachelle.feest",
+    "type" : "user"
+  } ],
+  "edges" : [ {
+    "src" : "zone1:Brian Turnpike",
+    "dst" : "zone0:Murrayville",
+    "perms" : "10001"
+  }, {
+    "src" : "zone1:danna.waters",
+    "dst" : "zone1:saepe_aut",
+    "perms" : "11100"
+  }, {
+    "src" : "zone0:Guy Plain",
+    "dst" : "zone1:Lake Josiefort",
+    "perms" : "10010"
+  }, {
+    "src" : "zone1:norman.roob",
+    "dst" : "zone1:saepe_aut",
+    "perms" : "00100"
+  }, {
+    "src" : "zone2:debera.moore",
+    "dst" : "zone2:Antwan Field",
+    "perms" : "10001"
+  }, {
+    "src" : "zone0:sid.lindgren",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "01000"
+  }, {
+    "src" : "zone1:karl.mertz",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "01111"
+  }, {
+    "src" : "zone1:lois.ohara",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "01001"
+  }, {
+    "src" : "zone0:rodger.crooks",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "10111"
+  }, {
+    "src" : "zone1:saepe_aut",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "11000"
+  }, {
+    "src" : "zone1:rachelle.feest",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "11000"
+  }, {
+    "src" : "zone0:emory.skiles",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "10100"
+  }, {
+    "src" : "zone2:margit.miller",
+    "dst" : "zone2:Antwan Field",
+    "perms" : "11000"
+  }, {
+    "src" : "zone0:edmund.lesch",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "10110"
+  }, {
+    "src" : "zone1:theola.gusikowski",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "00101"
+  }, {
+    "src" : "zone1:lyman.leuschke",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "10000"
+  }, {
+    "src" : "zone0:earle.bauch",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "01011"
+  }, {
+    "src" : "zone0:terrell.koch",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "01001"
+  }, {
+    "src" : "zone1:monty.ward",
+    "dst" : "zone1:saepe_aut",
+    "perms" : "10010"
+  }, {
+    "src" : "zone2:Brekke Gardens",
+    "dst" : "zone1:Lake Josiefort",
+    "perms" : "10100"
+  }, {
+    "src" : "zone1:lyman.leuschke",
+    "dst" : "zone1:saepe_aut",
+    "perms" : "10101"
+  }, {
+    "src" : "zone1:jerold.murray",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "00100"
+  }, {
+    "src" : "zone1:et_praesentium",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "10111"
+  }, {
+    "src" : "zone1:Isaias Cape",
+    "dst" : "zone0:Murrayville",
+    "perms" : "00111"
+  }, {
+    "src" : "zone0:nicolas.vonrueden",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "11010"
+  }, {
+    "src" : "zone0:wyatt.feest",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "11111"
+  }, {
+    "src" : "zone2:Antwan Field",
+    "dst" : "zone0:Murrayville",
+    "perms" : "11001"
+  }, {
+    "src" : "zone1:donte.hackett",
+    "dst" : "zone1:Isaias Cape",
+    "perms" : "01010"
+  }, {
+    "src" : "zone1:dalila.mclaughlin",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "00110"
+  }, {
+    "src" : "zone0:gregorio.hodkiewicz",
+    "dst" : "zone0:Guy Plain",
+    "perms" : "10100"
+  }, {
+    "src" : "zone2:coralie.williamson",
+    "dst" : "zone2:Antwan Field",
+    "perms" : "11010"
+  }, {
+    "src" : "zone1:blair.bednar",
+    "dst" : "zone1:et_praesentium",
+    "perms" : "10111"
+  } ]
+}

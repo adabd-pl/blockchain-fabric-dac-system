@@ -17,6 +17,8 @@ createcertificatesForOrg1() {
   echo
 
   fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca.org1.example.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
+  # make private key name predictable
+  mv "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/msp/keystore/priv_sk"
 }
 #Orgnisation units will be useful in future
 nodeOrgnisationUnit() {
@@ -63,3 +65,6 @@ sleep 2
 nodeOrgnisationUnit
 sleep 2
 registerUsers
+
+
+  mv "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk"

@@ -1,0 +1,17 @@
+test:
+  workers:
+    type: local
+    number: 2
+  rounds:
+    - label: Query graph.
+      txDuration: 30  #transaction duration 
+      rateControl:
+          type: fixed-load
+          opts:
+            tps: 5 #with  of 5 TPS
+      workload:
+        module: workload/queryAllGraph.js
+        arguments:
+          assets: 10
+          contractId:  permissiongraph
+ 

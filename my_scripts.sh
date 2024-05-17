@@ -24,18 +24,27 @@ cd org3
  
  cd ../org1
 ./3_createChannel.sh
+./3_createChannel.sh
  
+ cd ../deployChaincode
+./deployOrg1_JavaScript.sh mychannel 1 1
+
  cd ../org2
 ./3_joinChannel.sh
-
-
-
+ cd ../deployChaincode
+./deployOrg2_JavaScript.sh mychannel 1 1
 cd ../org3
-./3_createChannel.sh
-
-cd ../org1
 ./3_joinChannel.sh
+ cd ../deployChaincode
+./deployOrg3_JavaScript.sh mychannel 1 1
 
 
+#./3_createChannel.sh
+#cd ../org1
+
+
+#cd ../deployChaincode
+
+#./deploy_all_Org.sh
 #query function from chaincode
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile ${PWD}/orderer/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem  --channelID mychannel  -n fabcarjs --peerAddresses localhost:7051 --tlsRootCertFiles ${PWD}/org1/crypto-config-ca/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt  -c '{"function": "queryAllCars","Args":[]}'

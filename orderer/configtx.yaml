@@ -342,15 +342,6 @@ Profiles:
             Organizations:
                 - *Org1
                 - *Org2
-            Capabilities:
-                <<: *ApplicationCapabilities
-    BasicChannel2:
-        Consortium: Sample2Consortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
                 - *Org3
             Capabilities:
                 <<: *ApplicationCapabilities
@@ -389,7 +380,4 @@ Profiles:
                 Organizations:
                 - *Org1
                 - *Org2
-            Sample2Consortium:
-                Organizations:
-                - *Org1
                 - *Org3

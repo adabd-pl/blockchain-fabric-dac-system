@@ -85,3 +85,6 @@ createMSPPeer1
 generateUserMSP
 generateAdminMSP
 docker-compose -f docker-compose-peer.yaml up -d
+
+mv "$(pwd)/crypto-config-ca/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/keystore/priv_sk"
+mv "$(pwd)/crypto-config-ca/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/priv_sk"

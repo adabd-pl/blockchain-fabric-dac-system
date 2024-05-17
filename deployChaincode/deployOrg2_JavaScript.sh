@@ -61,7 +61,33 @@ approveForMyOrg2() {
 
   setGlobalsForPeer0Org2
 
-  peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} --init-required
+  peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION}   --collections-config '/home/adabd/go/src/github.com/NewNetwork_v2/Hyperledger-Fabric/collections_config.json' --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} --init-required
+
+}
+
+getblock() {
+  peer channel getinfo -c mychannel -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
+}
+
+checkCommitReadyness() {
+
+  peer lifecycle chaincode checkcommitreadiness --channelID $CHANNEL_NAME --name ${CC_NAME} --sequence ${CC_SEQUENCE} --version ${CC_VERSION}   --collections-config '/home/adabd/go/src/github.com/NewNetwork_v2/Hyperledger-Fabric/collections_config.json'  --init-required --output json
+
+}
+commitChaincodeDefination() {
+
+  peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME}   --collections-config '/home/adabd/go/src/github.com/NewNetwork_v2/Hyperledger-Fabric/collections_config.json' --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA --sequence ${CC_SEQUENCE} --version ${CC_VERSION} --init-required
+
+}
+
+queryCommitted() {
+
+  peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name ${CC_NAME} --output json
+
+}
+chaincodeInvokeInit() {
+
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME -n ${CC_NAME} --isInit --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA  -c '{"function": "initLedger","Args":[]}'
 
 }
 
@@ -75,11 +101,14 @@ readTransaction() {
   echo "Reading a transaction"
 
   # Query all cars
+ # peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraph"]}'
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "createVerticeInPrivate", "Args":["V10" , "User", "Org2MSPPrivateCollection"]}'
 
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryAllCars"]}'
-
+  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "Org2MSPPrivateCollection"]}'
+  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "V10"  , "Org2MSPPrivateCollection"]}'
+  
   # Query Car by Id
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryCar","Args":["CAR0"]}'
+  #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryCar","Args":["CAR101"]}'
 }
 lifecycleCommands() {
   echo " "
@@ -105,37 +134,9 @@ lifecycleCommands() {
   
   echo " "
   echo "============================ APPROVE FOR ORG ============================"
-  approveForMyOrg1
+  approveForMyOrg2
   sleep 2
   
-  echo " "
-  echo "========================== GET INFO FOR CHAIN ==========================="
-  echo " "
-  
-  getblock
-  checkCommitReadyness
-  sleep 2
-
-  echo " "
-  echo "========================== COMMIT CHAINCODE ============================="
-  echo " "
-  
-  commitChaincodeDefination
-  sleep 2
-
-  echo " "
-  echo "============================ QUERY COMMITED ============================="
-  echo " "
-  
-  queryCommitted
-  sleep 2
-  
-  echo " "
-  echo "============================ INIT CHAINCODE ============================"
-  echo " "
-  
-  chaincodeInvokeInit
-  sleep 10
 }
 getInstallChaincodes() {
 
@@ -154,6 +155,6 @@ preSetupJavaScript
 chaincodeInfo "$1"  "$2" "$3"
 setGlobalsForPeer0Org2
 lifecycleCommands
-insertTransaction
+#insertTransaction
 readTransaction
 getInstallChaincodes

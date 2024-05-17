@@ -27,3 +27,8 @@ org1/crypto-config-ca/*
 org3/fabric-ca/*
 org2/fabric-ca/*
 org1/fabric-ca/*
+
+caliper-workspace/node_modules/*
+log.txt
+org1/permissiongraph.tar.gz
+caliper-workspace/caliper.log

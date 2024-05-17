@@ -46,14 +46,13 @@ removeOrg3CA() {
   docker-compose -f ./org3/docker-compose-peer.yaml down --volumes --remove-orphans
 }
 
-export COMPOSE_PROJECT_NAME=fabricnet
 removeOrdererCA
 removeOrg1CA
 removeOrg2CA
 removeOrderers
 removeOrg1
 removeOrg2
-export COMPOSE_PROJECT_NAME=org3
+
 removeOrg3CA
 removeOrg3CA
 

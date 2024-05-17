@@ -88,4 +88,6 @@ generateAdminMSP
 sleep 10
 docker-compose -f docker-compose-peer.yaml up -d
 sleep 10
-docker ps -a
+mv "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk"
+mv "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/"* "$(pwd)/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/priv_sk"
+
