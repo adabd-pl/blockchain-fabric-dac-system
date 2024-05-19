@@ -1,27 +1,13 @@
-/*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
 
 'use strict';
 
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
 
-const helper = require('./helper');
-
+const vertices = [ 'zone0:wyatt.feest' ,'zone1:saepe_aut' , 'zone1:rachelle.feest' , 'zone1:et_praesentium',  'zone1:Brian Turnpike'];
 /**
  * Workload module for the benchmark round.
  */
-class QueryCarWorkload extends WorkloadModuleBase {
+class QueryAssetWorkload extends WorkloadModuleBase {
     /**
      * Initializes the workload module instance.
      */
@@ -54,16 +40,16 @@ class QueryCarWorkload extends WorkloadModuleBase {
      */
     async submitTransaction() {
         this.txIndex++;
-        let carNumber = 'Client' + this.workerIndex + '_CAR' + this.txIndex.toString();
-
-        let args = {
-            contractId: 'fabcargo',
-            contractVersion: 'v1',
-            contractFunction: 'queryCar',
-            contractArguments: ['CAR101'],
-            timeout: 30,
-            readOnly: true
+        let id = vertices[Math.floor(Math.random() * vertices.length)];
+        
+        const args = {
+            contractId: this.roundArguments.contractId,
+            contractFunction: 'readVerticeInPrivate',
+            invokerIdentity: 'User1',
+            contractArguments: [ id  , 'Org1Org2MSPPrivateCollection'],
+            readOnly: false
         };
+        
 
         if (this.txIndex === this.limitIndex) {
             this.txIndex = 0;
@@ -78,7 +64,7 @@ class QueryCarWorkload extends WorkloadModuleBase {
  * @return {WorkloadModuleInterface}
  */
 function createWorkloadModule() {
-    return new QueryCarWorkload();
+    return new QueryAssetWorkload();
 }
 
 module.exports.createWorkloadModule = createWorkloadModule;

@@ -59,12 +59,21 @@ readTransaction() {
   #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["Org1MSPPrivateCollection"]}'
   echo "PRIVATE COLLECTION ORG1 - READ GRAPH"
   #sleep 4
+  export PRIVATE_COLLECTION="Org1Org2MSPPrivateCollection"
   echo ${PRIVATE_COLLECTION}
-  echo '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
-  echo '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "Org1Org2MSPPrivateCollection"]}'
   peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
   #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E1" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
 }
+
+transferTransaction() {
+  #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["Org1MSPPrivateCollection"]}'
+  echo "PRIVATE COLLECTION ORG1 - TRANSFER EDGE"
+  #sleep 4
+  echo ${PRIVATE_COLLECTION}
+  #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E20" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
+}
+
 
 
 getInstallChaincodes() {
@@ -156,18 +165,20 @@ else
 fi
 
 # Function request based on second parameter
-if   [ "$3" == "queryPrivateCollection1" ]; then
+if   [ "$3" == "queryPC1" ]; then
     queryPrivateCollection1
-elif [ "$3" == "queryPrivateCollection2" ]; then
+elif [ "$3" == "queryPC2" ]; then
     queryPrivateCollection2
-elif [ "$3" == "queryPrivateCollection3" ]; then
+elif [ "$3" == "queryPC3" ]; then
     queryPrivateCollection3
-elif   [ "$3" == "initPrivateCollection1_2" ]; then
+elif   [ "$3" == "initPC1_2" ]; then
     initPrivateCollection1_2
-elif [ "$3" == "initPrivateCollection3" ]; then
+elif [ "$3" == "initPC3" ]; then
     initPrivateCollection3
 elif [ "$3" == "readTransaction" ]; then
     readTransaction
+elif [ "$3" == "transferTransaction" ]; then
+    transferTransaction
 else
     echo "Invalid second parameter"
     #usage
@@ -176,6 +187,8 @@ else
 
     echo "UPDATE PERMISSION FROM ORG1"
 
-    peer channel getinfo -c mychannel
+   
 fi
+
+peer channel getinfo -c mychannel
 

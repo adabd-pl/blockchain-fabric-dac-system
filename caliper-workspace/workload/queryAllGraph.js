@@ -3,7 +3,7 @@
 'use strict';
 
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
-const helper = require('./helper');
+
 
 /**
  * Workload module for the benchmark round.
@@ -23,11 +23,12 @@ class QueryAllGraphWorkload extends WorkloadModuleBase {
       
         const request = {
             contractId: this.roundArguments.contractId,
-            contractFunction: 'queryGraph',
+            contractFunction: 'queryGraphFromCollection',
             invokerIdentity: 'User1',
-           // contractArguments: ['Org1MSPPrivateCollection'],
+            contractArguments: ['Org1Org2MSPPrivateCollection'],
             readOnly: false
         };
+        
 
         await this.sutAdapter.sendRequests(request);
     }

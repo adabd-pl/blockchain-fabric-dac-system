@@ -1,7 +1,7 @@
 test:
   workers:
     type: local
-    number: 3
+    number: 2
   rounds:
     - label: Query graph.
       txDuration: 30  #transaction duration 
@@ -14,4 +14,13 @@ test:
         arguments:
           assets: 10
           contractId:  permissiongraph
- 
+    - label: Query vertice.
+      txDuration: 30  #transaction duration 
+      rateControl:
+          type: fixed-load
+          opts:
+            tps: 5 #with  of 5 TPS
+      workload:
+        module: workload/queryAsset.js
+        arguments:
+          contractId:  permissiongraph

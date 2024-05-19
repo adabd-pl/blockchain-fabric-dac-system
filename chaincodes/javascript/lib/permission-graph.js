@@ -6,6 +6,7 @@
 
 'use strict';
 
+const { AsyncResource } = require('async_hooks');
 const { Contract } = require('fabric-contract-api');
 const fs = require('fs');
 
@@ -338,7 +339,7 @@ class PermissionGraph extends Contract {
     async createVerticeInPrivate(ctx, id , type , collectionName ) {
       console.info('============= START : Create Vertice In Private ===========');
       try {
-        const vertice = {
+        vertice = {
           id,
           type
         };
@@ -415,23 +416,25 @@ class PermissionGraph extends Contract {
       if (clientMSPID !== peerMSPID) {
           throw new Error('client from org %v is not authorized to read or write private data from an org ' + clientMSPID + ' peer ' + peerMSPID);
       }
-    
-      console.log('TransferAsset Put: collection' + toCollection +', ID ' + id + '  asset: ' + asset.toString());
-      
+
+      console.log('TransferAsset Put: collection' + toCollection +', ID ' + id  + '  asset: ' + asset.toString());
+      const asset_json = JSON.parse(asset);
+      console.log('TransferAsset: ' + asset_json.src +' from ' + asset_json);
+     
+  
       const edge_ref = {
-        src,
-        dst  
+        src: asset_json.src,
+        dst: asset_json.dst,
+        docType: 'edge_ref'
       };
-
-      edge_ref.src = asset.src;
-      edge_ref.dst = asset.dst;
-      edge_ref.docType = 'edge_ref';
+    
+      console.log(edge_ref);
     
 
-      await ctx.stub.putPrivateData(toCollection,  id , edge_ref.toString());
+      await ctx.stub.putPrivateData(toCollection,  id , Buffer.from(JSON.stringify(edge_ref)));
       
       console.info('============= END : Transfer Edge In Private ===========');
-      return asset.toString();
+      return JSON.stringify(edge_ref);
     }
 
 
