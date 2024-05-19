@@ -1,7 +1,7 @@
 test:
   workers:
     type: local
-    number: 2
+    number: 3
   rounds:
     - label: Query graph.
       txDuration: 30  #transaction duration 

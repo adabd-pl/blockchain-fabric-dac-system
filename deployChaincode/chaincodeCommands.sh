@@ -2,7 +2,7 @@
 
 chaincodeInfo(){
   #!/bin/bash
-  export CHANNEL_NAME=$1
+  export CHANNEL_NAME="mychannel"
   export CC_RUNTIME_LANGUAGE="node"
   export CC_SRC_PATH=../chaincodes/javascript
   export CC_NAME="permissiongraph"
@@ -19,14 +19,29 @@ setGlobalsForPeer0Org1() {
   export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/../org1/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
   export CORE_PEER_ADDRESS=localhost:7051
+
+  export PRIVATE_COLLECTION="Org1Org2MSPPrivateCollection"
 }
+
+setGlobalsForPeer1Org1() {
+  export PEER0_ORG1_CA=${PWD}/../org1/crypto-config-ca/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+  export CORE_PEER_LOCALMSPID="Org1MSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/../org1/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+  export CORE_PEER_ADDRESS=localhost:7051
+
+  export PRIVATE_COLLECTION="Org1Org2MSPPrivateCollection"
+}
+
 
 setGlobalsForPeer0Org2() {
   export PEER0_ORG2_CA=${PWD}/../org2/crypto-config-ca/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
   export CORE_PEER_LOCALMSPID="Org2MSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG_CA
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG2_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/../org2/crypto-config-ca/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp
   export CORE_PEER_ADDRESS=localhost:9051
+
+  export PRIVATE_COLLECTION="Org1Org2MSPPrivateCollection"
 }
 
 
@@ -36,21 +51,19 @@ setGlobalsForPeer0Org3() {
   export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG3_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/../org3/crypto-config-ca/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp
   export CORE_PEER_ADDRESS=localhost:11051
+
+  export PRIVATE_COLLECTION="Org3MSPPrivateCollection"
 }
 
 readTransaction() {
-
-
   #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["Org1MSPPrivateCollection"]}'
-
-
   echo "PRIVATE COLLECTION ORG1 - READ GRAPH"
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c 
   #sleep 4
-  #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "V11" , "Org1MSPPrivateCollection"]}'
+  echo ${PRIVATE_COLLECTION}
+  echo '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
+  echo '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "Org1Org2MSPPrivateCollection"]}'
+  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
   #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E1" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
-    
-    
 }
 
 
@@ -59,10 +72,9 @@ getInstallChaincodes() {
 }
 
 
-
 initPrivateCollection1_2(){
   setGlobalsForPeer0Org1
-  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["Org1Org2MSPPrivateCollection"]}'
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["'${PRIVATE_COLLECTION}'"]}'
 }
 
 
@@ -131,7 +143,7 @@ peer channel getinfo -c mychannel
 # Set globals to org based on first parameter
 if   [ "$2" == "org1" ]; then
     setGlobalsForPeer0Org1
-    export PRIVATE_COLLECTION= "Org1Org2MSPPrivateCollection"   
+       
 elif [ "$2" == "org2" ]; then
     setGlobalsForPeer0Org2
     export PRIVATE_COLLECTION= "Org1Org2MSPPrivateCollection" 
@@ -154,6 +166,8 @@ elif   [ "$3" == "initPrivateCollection1_2" ]; then
     initPrivateCollection1_2
 elif [ "$3" == "initPrivateCollection3" ]; then
     initPrivateCollection3
+elif [ "$3" == "readTransaction" ]; then
+    readTransaction
 else
     echo "Invalid second parameter"
     #usage

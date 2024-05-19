@@ -15,7 +15,8 @@ class QueryAllGraphWorkload extends WorkloadModuleBase {
 
     async initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext) {
         await super.initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext);
-        
+        //TODO
+        //Add init of private collections
     }
 
     async submitTransaction() {

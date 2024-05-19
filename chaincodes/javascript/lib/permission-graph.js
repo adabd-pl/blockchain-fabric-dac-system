@@ -328,7 +328,6 @@ class PermissionGraph extends Contract {
 
     }
 
-
     /**
      * Create new vertice in private collection.
      * @param {Context} ctx - The transaction context.
@@ -361,14 +360,14 @@ class PermissionGraph extends Contract {
       console.info('============= START : Read Vertice In Private ===========');
 
       const vertice = await ctx.stub.getPrivateData(collectionName, id); 
-      const vertice_param = await ctx.stub.getPrivateDataValidationParameter(collectionName, id); 
+      //const vertice_param = await ctx.stub.getPrivateDataValidationParameter(collectionName, id); 
     
       if (!vertice || vertice.length === 0) {
           throw new Error(`${id} does not exist`);
       }
 
       console.log(vertice.toString());
-      console.log(vertice_param.toString());
+      //console.log(vertice_param.toString());
       
       console.info('============= END : Read Vertice In Private ===========');
 

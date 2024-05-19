@@ -24,6 +24,7 @@ preSetupJavaScript() {
 export CORE_PEER_TLS_ENABLED=true
 export ORDERER_CA=${PWD}/../orderer/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 export PEER0_ORG3_CA=${PWD}/../org3/crypto-config-ca/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt
+export PEER1_ORG3_CA=${PWD}/../org3/crypto-config-ca/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls/ca.crt
 export FABRIC_CFG_PATH=${PWD}/../config
 
 setGlobalsForPeer0Org3() {
@@ -31,6 +32,10 @@ setGlobalsForPeer0Org3() {
   export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG3_CA
   export CORE_PEER_MSPCONFIGPATH=${PWD}/../org3/crypto-config-ca/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp
   export CORE_PEER_ADDRESS=localhost:11051
+}
+setGlobalsForPeer1Org3() {
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER1_ORG3_CA
+  export CORE_PEER_ADDRESS=localhost:12051
 }
 
 packageChaincode() {
@@ -44,7 +49,9 @@ packageChaincode() {
 installChaincode() {
 
   peer lifecycle chaincode install ${CC_NAME}.tar.gz
-
+  setGlobalsForPeer1Org3
+  peer lifecycle chaincode install ${CC_NAME}.tar.gz
+  setGlobalsForPeer0Org3
 }
 
 queryInstalled() {
@@ -77,7 +84,9 @@ checkCommitReadyness() {
 commitChaincodeDefination() {
 
   peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME}   --collections-config '/home/adabd/go/src/github.com/NewNetwork_v2/Hyperledger-Fabric/collections_config.json' --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA --sequence ${CC_SEQUENCE} --version ${CC_VERSION} --init-required
-
+  setGlobalsForPeer1Org3
+  peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME}   --collections-config '/home/adabd/go/src/github.com/NewNetwork_v2/Hyperledger-Fabric/collections_config.json' --peerAddresses localhost:12051 --tlsRootCertFiles $PEER1_ORG3_CA --sequence ${CC_SEQUENCE} --version ${CC_VERSION} --init-required 
+  setGlobalsForPeer0Org3
 }
 
 queryCommitted() {
@@ -91,25 +100,6 @@ chaincodeInvokeInit() {
 
 }
 
-insertTransaction() {
-
-  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA -c '{"function": "createCar", "Args":["CAR103","Audi","R8","Black", "CM"]}'
-
-  sleep 3
-}
-readTransaction() {
-  echo "Reading a transaction"
-
-  # Query all cars
- # peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraph"]}'
-  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA -c '{"function": "createVerticeInPrivate", "Args":["V10" , "User", "Org3MSPPrivateCollection"]}'
-
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "Org3MSPPrivateCollection"]}'
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "V10"  , "Org3MSPPrivateCollection"]}'
-  
-  # Query Car by Id
-  #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryCar","Args":["CAR101"]}'
-}
 lifecycleCommands() {
   echo " "
   echo "========================== PACKAGE CHAINCODE =========================="
@@ -151,10 +141,8 @@ if [ $# -ne 3 ]; then
     exit 1
 fi
 
-preSetupJavaScript
+#preSetupJavaScript
 chaincodeInfo "$1"  "$2" "$3"
 setGlobalsForPeer0Org3
 lifecycleCommands
-#insertTransaction
-readTransaction
 getInstallChaincodes

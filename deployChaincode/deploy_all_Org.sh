@@ -6,6 +6,7 @@ if [ $# -ne 3 ]; then
     exit 1
 fi
 
+export PATH=../$PWD/bin:$PATH
 
 ./deployOrg1_JavaScript.sh  $1 $2 $3
 

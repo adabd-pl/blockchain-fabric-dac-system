@@ -1,5 +1,8 @@
 ./clean.sh
 
+
+export PATH=$PWD/bin:$PATH
+
 ./my_scripts.sh
 
 #cd deployChaincode
