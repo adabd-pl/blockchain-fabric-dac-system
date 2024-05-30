@@ -5,7 +5,7 @@
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
 
 const perms = ['01001', '00111', '00111', '01110', '00001', '10111'];
-
+let txIndex = 0;
 /**
  * Workload module for the benchmark round.
  */
@@ -29,7 +29,9 @@ class ChangePermissionWorkload extends WorkloadModuleBase {
      * @async
      */
     async initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext) {
+        this.txIndex = 0;
         await super.initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext);
+        
    }
 
     /**
@@ -37,9 +39,10 @@ class ChangePermissionWorkload extends WorkloadModuleBase {
      * @return {Promise<TxStatus[]>}
      */
     async submitTransaction() {
-        this.txIndex++;
+        this.txIndex = this.txIndex + 1;
         let newPerms = perms[Math.floor(Math.random() * perms.length)];
-        let edgeId = 'E' + Math.floor(Math.random() * 20);
+       
+        let edgeId = 'E' + this.txIndex.toString(); 
 
         let args = {
             contractId: this.roundArguments.contractId,
@@ -49,10 +52,8 @@ class ChangePermissionWorkload extends WorkloadModuleBase {
             readOnly: false
         };
 
-        if (this.txIndex === this.roundArguments.assets) {
-            this.txIndex = 0;
-        }
 
+        
         await this.sutAdapter.sendRequests(args);
     }
 }

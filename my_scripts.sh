@@ -24,7 +24,6 @@ cd org3
  
  cd ../org1
 ./3_createChannel.sh
-./3_createChannel.sh
  
  cd ../deployChaincode
 ./deployOrg1_JavaScript.sh mychannel 1 1

@@ -61,8 +61,10 @@ readTransaction() {
   #sleep 4
   export PRIVATE_COLLECTION="Org1Org2MSPPrivateCollection"
   echo ${PRIVATE_COLLECTION}
-  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
-  #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E1" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
+  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" ]}'
+  peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["changePermission" ,  "E13"  , "10001"]}'
+
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"Args":["changePermission" ,  "E13" , "10001"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA
 }
 
 transferTransaction() {
@@ -71,7 +73,7 @@ transferTransaction() {
   #sleep 4
   echo ${PRIVATE_COLLECTION}
   #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "zone1:theola.gusikowski" , "'${PRIVATE_COLLECTION}'"]}'
-  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E20" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E20" ]}' --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA #--peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
 }
 
 
@@ -87,25 +89,20 @@ initPrivateCollection1_2(){
 }
 
 
-
 initPrivateCollection3(){
   setGlobalsForPeer0Org3
   peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA -c '{"function": "initPrivateCollectionOrg3", "Args":["Org3MSPPrivateCollection"]}'
 }
-
 
 queryPrivateCollection1(){
   setGlobalsForPeer0Org1
   peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "Org1Org2MSPPrivateCollection"]}'
 }
 
-
 queryPrivateCollection2(){
   setGlobalsForPeer0Org2
   peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "Org1Org2MSPPrivateCollection"]}'
 }
-
-
 
 queryPrivateCollection3(){
   setGlobalsForPeer0Org3
@@ -117,33 +114,59 @@ queryPrivateCollection3(){
 ###setGlobalsForPeer0Org2
 
 
-
 ##peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "initPrivateCollectionOrg1_2", "Args":["Org1Org2MSPPrivateCollection"]}'
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["V13" , "Org2MSPPrivateCollection", "Org1MSPPrivateCollection"]}'  --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA
-  
 ##peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "Org2MSPPrivateCollection"]}'
-
-##peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraph" ]}''
-
-#peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["queryGraphFromCollection" , "assetCollection" ]}'
 #peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"Args":["readVerticeInPrivate" ,  "V13" , "Org2MSPPrivateCollection"]}'
-
-
 
 ##Change collection configuration 
 # ./deployOrg1_JavaScript with change collections_config.json
 
 function usage() {
-    echo "Usage: $0 <channel name> org<nr> <test-name>"
+    #echo "Usage: $0 <channel name> org<nr> <test-name>"
+    echo "Usage: $0 <channel name> org<nr> <query/invoke> <function with args>"
     exit 1
 }
 
 chaincodeInfo "$1"
 
 # Sprawdzanie ilości argumentów
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 4 ]; then
     usage
 fi
+
+if   [ "$2" == "org1" ]; then
+    setGlobalsForPeer0Org1   
+
+    if [ "$3" == "invoke" ]; then
+        peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c "${4}"
+        
+    elif [ "$3" == "query" ]; then
+        peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c "${4}"
+    fi 
+elif [ "$2" == "org2" ]; then
+    setGlobalsForPeer0Org2
+    export PRIVATE_COLLECTION= "Org1Org2MSPPrivateCollection" 
+    if [ "$3" == "invoke" ]; then
+        peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c "${4}"
+        
+    elif [ "$3" == "query" ]; then
+        peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c "${4}"
+    fi 
+elif [ "$2" == "org3" ]; then
+    setGlobalsForPeer0Org3
+    export PRIVATE_COLLECTION= "Org3MSPPrivateCollection" 
+     if [ "$3" == "invoke" ]; then
+        peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA -c "${4}"
+    elif [ "$3" == "query" ]; then
+        peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c "${4}"
+    fi
+else
+    echo "Invalid first parameter"
+    usage
+fi
+
+exit 1
 
 setGlobalsForPeer0Org1
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "transferAsset", "Args":["E2" , "Org1Org2MSPPrivateCollection", "Org3MSPPrivateCollection"]}'
@@ -181,13 +204,7 @@ elif [ "$3" == "transferTransaction" ]; then
     transferTransaction
 else
     echo "Invalid second parameter"
-    #usage
-
-    echo "TRANSFER EDGE FROM ORG1_ORG2 TO ORG3"
-
-    echo "UPDATE PERMISSION FROM ORG1"
-
-   
+    #usage  
 fi
 
 peer channel getinfo -c mychannel

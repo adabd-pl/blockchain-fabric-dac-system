@@ -1,25 +1,39 @@
 test:
   workers:
     type: local
-    number: 2
+    number: 1
   rounds:
+    - label: Change permission.
+      txNumber: 10  #transaction duration 
+      rateControl:
+          type: fixed-rate
+          opts:
+            tps: 100
+            #transactionLoad: 1
+      workload:
+        module: workload/changePermission.js
+        arguments:
+          txIndex: 0
+          contractId:  permissiongraph
     - label: Query graph.
-      txDuration: 30  #transaction duration 
+      txDuration: 100  #transaction duration 
       rateControl:
           type: fixed-load
           opts:
-            tps: 5 #with  of 5 TPS
+            tps: 100 
+            transactionLoad: 100
       workload:
         module: workload/queryAllGraph.js
         arguments:
           assets: 10
           contractId:  permissiongraph
     - label: Query vertice.
-      txDuration: 30  #transaction duration 
+      txDuration: 100  #transaction duration 
       rateControl:
           type: fixed-load
           opts:
-            tps: 5 #with  of 5 TPS
+            tps: 100 
+            transactionLoad: 100
       workload:
         module: workload/queryAsset.js
         arguments:

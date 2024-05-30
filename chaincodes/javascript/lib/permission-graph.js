@@ -18,342 +18,12 @@ class PermissionGraph extends Contract {
      * @param {Context} ctx - The transaction context.
      */
     async initLedger(ctx) {
-      /*  console.info('============= START : Initialize Ledger ===========');
+       console.info('============= START : Initialize Ledger ===========');
 
 
-        for (let i = 0; i < vertices .length; i++) {
-            vertices[i].docType = 'vertical';
-            // await ctx.stub.putState(vertices[i].id, Buffer.from(JSON.stringify(vertices[i])));
-            console.info('Added <--> ', vertices[i]);
-        }
-
-
-        console.info('============= END : create Vertice In Private ===========');
-        for (let i = 0; i < edges.length; i++) {
-            edges[i].docType = 'edge';
-            //await ctx.stub.putState( 'edge' + i , Buffer.from(JSON.stringify(edges[i])));
-            console.info('Added <--> ', edges[i]);
-        }
-        console.info('============= END : Initialize Ledger ===========');*/
+        console.info('============= END : Initialize Ledger ===========');
     }
 
-    /**
-     * Initializes the ledger private collection.
-     * @param {Context} ctx - The transaction context.
-     * @param {String} collectionName - Name of collection to init. 
-    */
-    async initPrivateCollectionOrg1_2(ctx, collectionName){
-      const data = { 
-      "vertices" : [ {
-          "id" : "zone0:wyatt.feest",
-          "type" : "user"
-        }, {
-          "id" : "zone0:emory.skiles",
-          "type" : "user"
-        }, {
-          "id" : "zone1:theola.gusikowski",
-          "type" : "user"
-        }, {
-          "id" : "zone1:Brian Turnpike",
-          "type" : "space"
-        }, {
-          "id" : "zone0:Murrayville",
-          "type" : "provider"
-        }, {
-          "id" : "zone1:lyman.leuschke",
-          "type" : "user"
-        }, {
-          "id" : "zone0:earle.bauch",
-          "type" : "user"
-        }, {
-          "id" : "zone1:et_praesentium",
-          "type" : "group"
-        }, {
-          "id" : "zone1:Lake Josiefort",
-          "type" : "provider"
-        }, {
-          "id" : "zone1:lois.ohara",
-          "type" : "user"
-        }, {
-          "id" : "zone1:saepe_aut",
-          "type" : "group"
-        }, {
-          "id" : "zone1:Isaias Cape",
-          "type" : "space"
-        }, {
-          "id" : "zone0:terrell.koch",
-          "type" : "user"
-        }, {
-          "id" : "zone0:sid.lindgren",
-          "type" : "user"
-        }, {
-          "id" : "zone1:donte.hackett",
-          "type" : "user"
-        }, {
-          "id" : "zone0:edmund.lesch",
-          "type" : "user"
-        }, {
-          "id" : "zone1:monty.ward",
-          "type" : "user"
-        }, {
-          "id" : "zone1:karl.mertz",
-          "type" : "user"
-        }, {
-          "id" : "zone1:jerold.murray",
-          "type" : "user"
-        }, {
-          "id" : "zone1:norman.roob",
-          "type" : "user"
-        }, {
-          "id" : "zone1:danna.waters",
-          "type" : "user"
-        }, {
-          "id" : "zone1:dalila.mclaughlin",
-          "type" : "user"
-        }, {
-          "id" : "zone0:Guy Plain",
-          "type" : "space"
-        },  {
-          "id" : "zone0:gregorio.hodkiewicz",
-          "type" : "user"
-        }, {
-          "id" : "zone1:blair.bednar",
-          "type" : "user"
-        }, {
-          "id" : "zone0:rodger.crooks",
-          "type" : "user"
-        },  {
-          "id" : "zone0:nicolas.vonrueden",
-          "type" : "user"
-        }, {
-          "id" : "zone1:rachelle.feest",
-          "type" : "user"
-        } ],
-        "edges" : [ {
-          "src" : "zone1:Brian Turnpike",
-          "dst" : "zone0:Murrayville",
-          "perms" : "10001"
-        }, {
-          "src" : "zone1:danna.waters",
-          "dst" : "zone1:saepe_aut",
-          "perms" : "11100"
-        }, {
-          "src" : "zone0:Guy Plain",
-          "dst" : "zone1:Lake Josiefort",
-          "perms" : "10010"
-        }, {
-          "src" : "zone1:norman.roob",
-          "dst" : "zone1:saepe_aut",
-          "perms" : "00100"
-        }, {
-          "src" : "zone0:sid.lindgren",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "01000"
-        }, {
-          "src" : "zone1:karl.mertz",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "01111"
-        }, {
-          "src" : "zone1:lois.ohara",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "01001"
-        }, {
-          "src" : "zone0:rodger.crooks",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "10111"
-        }, {
-          "src" : "zone1:saepe_aut",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "11000"
-        }, {
-          "src" : "zone1:rachelle.feest",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "11000"
-        }, {
-          "src" : "zone0:emory.skiles",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "10100"
-        },{
-          "src" : "zone0:edmund.lesch",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "10110"
-        }, {
-          "src" : "zone1:theola.gusikowski",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "00101"
-        }, {
-          "src" : "zone1:lyman.leuschke",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "10000"
-        }, {
-          "src" : "zone0:earle.bauch",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "01011"
-        }, {
-          "src" : "zone0:terrell.koch",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "01001"
-        }, {
-          "src" : "zone1:monty.ward",
-          "dst" : "zone1:saepe_aut",
-          "perms" : "10010"
-        },{
-          "src" : "zone1:lyman.leuschke",
-          "dst" : "zone1:saepe_aut",
-          "perms" : "10101"
-        }, {
-          "src" : "zone1:jerold.murray",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "00100"
-        }, {
-          "src" : "zone1:et_praesentium",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "10111"
-        }, {
-          "src" : "zone1:Isaias Cape",
-          "dst" : "zone0:Murrayville",
-          "perms" : "00111"
-        }, {
-          "src" : "zone0:nicolas.vonrueden",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "11010"
-        }, {
-          "src" : "zone0:wyatt.feest",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "11111"
-        },  {
-          "src" : "zone1:donte.hackett",
-          "dst" : "zone1:Isaias Cape",
-          "perms" : "01010"
-        }, {
-          "src" : "zone1:dalila.mclaughlin",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "00110"
-        }, {
-          "src" : "zone0:gregorio.hodkiewicz",
-          "dst" : "zone0:Guy Plain",
-          "perms" : "10100"
-        }, {
-          "src" : "zone1:blair.bednar",
-          "dst" : "zone1:et_praesentium",
-          "perms" : "10111"
-        } ]
-
-
-      
-      }
-
-      const vertices = data.vertices;
-      const edges = data.edges;
-
-      console.info('============= START : Initialize Collection ===========');
-      for (let i = 0; i < vertices .length; i++) {
-          vertices[i].docType = 'vertice';
-          await ctx.stub.putPrivateData(collectionName, vertices[i].id, Buffer.from(JSON.stringify(vertices[i])));
-    
-          console.info('Added <--> ', vertices[i]);
-      }
-
-      for (let i = 0; i < edges.length; i++) {
-          edges[i].docType = 'edge';
-          await ctx.stub.putPrivateData(collectionName,  "E" + i, Buffer.from(JSON.stringify(edges[i])));
-    
-          console.info('Added <--> ', edges[i]);
-      }
-      console.info('============= END : Initialize Collection ===========');
-
-    }
-    /**
-     * Initializes the ledger private collection.
-     * @param {Context} ctx - The transaction context.
-     * @param {String} collectionName - Name of collection to init. 
-    */
-    async initPrivateCollectionOrg3(ctx, collectionName){
-      const data = { 
-      "vertices" : [ {
-          "id" : "zone2:Antwan Field",
-          "type" : "space"
-        },{
-          "id" : "zone2:coralie.williamson",
-          "type" : "user"
-        },  {
-          "id" : "zone2:debera.moore",
-          "type" : "user"
-        }, {
-          "id" : "zone2:margit.miller",
-          "type" : "user"
-        }, {
-          "id" : "zone2:Brekke Gardens",
-          "type" : "space"
-        }],
-        "edges" : [ {
-          "src" : "zone2:debera.moore",
-          "dst" : "zone2:Antwan Field",
-          "perms" : "10001"
-        },  {
-          "src" : "zone2:margit.miller",
-          "dst" : "zone2:Antwan Field",
-          "perms" : "11000"
-        }, {
-          "src" : "zone2:Antwan Field",
-          "dst" : "zone0:Murrayville",
-          "perms" : "11001"
-        }, {
-          "src" : "zone2:coralie.williamson",
-          "dst" : "zone2:Antwan Field",
-          "perms" : "11010"
-        }]
-
-
-      
-      }
-
-      const vertices = data.vertices;
-      const edges = data.edges;
-
-      console.info('============= START : Initialize Collection ===========');
-      for (let i = 0; i < vertices .length; i++) {
-          vertices[i].docType = 'vertice';
-          await ctx.stub.putPrivateData(collectionName, vertices[i].id, Buffer.from(JSON.stringify(vertices[i])));
-    
-          console.info('Added <--> ', vertices[i]);
-      }
-
-      for (let i = 0; i < edges.length; i++) {
-          edges[i].docType = 'edge';
-          await ctx.stub.putPrivateData(collectionName,"E" + i, Buffer.from(JSON.stringify(edges[i])));
-    
-          console.info('Added <--> ', edges[i]);
-      }
-      console.info('============= END : Initialize Collection ===========');
-
-    }
-
-    /**
-     * Create new vertice in private collection.
-     * @param {Context} ctx - The transaction context.
-     * @param {String} id - id of vertice
-     * @param {String} type - type of vertice ( ex. user ) 
-     * @param {String} collectionName - Name of collection to init. 
-    */
-    async createVerticeInPrivate(ctx, id , type , collectionName ) {
-      console.info('============= START : Create Vertice In Private ===========');
-      try {
-        vertice = {
-          id,
-          type
-        };
-
-        vertice.id = id;
-        vertice.type = type;
-        vertice.doctype = "vertice";
-        await ctx.stub.putPrivateData(collectionName, id , Buffer.from(JSON.stringify(vertice)));
-        } catch(error) {
-            throw new Error ('Error when creating Vertice with id ' + id + '\n' + error);
-      }
-    
-      console.info('============= END : Create Vertice In Private ===========');
-    }
 
 
 
@@ -375,6 +45,7 @@ class PermissionGraph extends Contract {
       return vertice.toString();
     }
 
+
     /**
      * Create new edge in private collection.
      * @param {Context} ctx - The transaction context.
@@ -393,6 +64,31 @@ class PermissionGraph extends Contract {
 
       await ctx.stub.putPrivateData(collectionName , src + '_' + dst  , Buffer.from(JSON.stringify(edge)));
     }
+
+    /**
+     * Read edge from collection.
+     * @param {Context} ctx - The transaction context.
+     * @param {String} id - Id of edge. 
+     * @param {String} collectionName - Name of collection to query. 
+     * @returns {String} - searched edge.
+    */
+    async readEdgeInPrivate(ctx, id , collectionName ) {
+      console.info('============= START : Read Edge In Private ===========');
+
+      const edge = await ctx.stub.getPrivateData(collectionName, id); 
+
+      if (!edge || edge.length === 0) {
+          throw new Error(`${id} does not exist`);
+      }
+
+      console.log(edge.toString());
+      //console.log(vertice_param.toString());
+      
+      console.info('============= END : Read Edge In Private ===========');
+
+      return edge.toString();
+    }
+
 
     /**
      * Create edge reference to one private collection from another.
@@ -450,7 +146,7 @@ class PermissionGraph extends Contract {
       const allResults = [];
       for await (const {key, value} of ctx.stub.getPrivateDataByRange(collectionName, startKey, endKey)) {
           const strValue = Buffer.from(value).toString('utf8');
-          let record;
+          let record;  
           try {
               record = JSON.parse(strValue);
           } catch (err) {
@@ -466,70 +162,95 @@ class PermissionGraph extends Contract {
 
     //change perms in exact egde
     //TODO
-    async changePermission(ctx, edgeId , collectionName , newPerms) {
-        console.info('============= START : changePermission ===========');
+    async changePermission(ctx, edgeId , newPerms) {
+        const edgeKey = ctx.stub.createCompositeKey('vertex', [edgeId]);
 
-        const edgeAsBytes = await ctx.stub.getState(edgeId); //
+        const edgeAsBytes = await ctx.stub.getState( edgeKey);
         if (!edgeAsBytes || edgeAsBytes.length === 0) {
             throw new Error(`${edgeId} does not exist in graph`);
         }
      
         const peerMSPID = ctx.stub.getMspID();
     
-        if ( !collectionName.includes(peerMSPID) ) {
-            throw new Error('client from org %v is not authorized to read or write private data from an org ' + collectionName + ' peer ' + peerMSPID);
+        const edge = JSON.parse(edgeAsBytes);
+        edge.perms = newPerms;
+        console.log('Edge: ' + JSON.stringify(edge) +' permission: ' + edge.perms);
+     
+
+        await ctx.stub.putState(edgeId, Buffer.from(JSON.stringify(edge)));
+        console.info(`Edge ${edgeId} permissions has been updated`);
+    
+    }
+
+    /**
+     * Create new vertice.
+     * @param {Context} ctx - The transaction context.
+     * @param {String} vertexId - id of vertice
+     * @param {String} docType - type of vertice ( ex. user ) 
+    */
+    async createVertex(ctx, vertexId , docType ) {
+      const vertexKey = ctx.stub.createCompositeKey('vertex', [vertexId]);
+
+      const vertex = {
+        type: 'vertex',
+        id: vertexId,
+        owner: ctx.clientIdentity.getMSPID(),
+        docType: docType
+      };
+      console.log(JSON.stringify(vertex));
+      await ctx.stub.putState(vertexKey, Buffer.from(JSON.stringify(vertex)));
+      console.info(`Vertex ${vertexId} has been added`);
+      return `Vertex ${vertexId} has been added`;
+    }
+     
+   /**
+     * Create new edge.
+     * @param {Context} ctx - The transaction context.
+     * @param {String} edgeId - id of vertice
+     * @param {String} src - source of edge
+     * @param {String} dst - destincation of edge
+     * @param {String} perms - permissions for edge
+    */
+    async createEdge(ctx, edgeId ,src ,dst , perms ) {
+      const edgeKey = ctx.stub.createCompositeKey('edge', [edgeId]);
+     
+      
+      //src_vertex = this.queryVertex(ctx, src);
+     
+      try{
+       const dst_vertex = await this.queryVertex(ctx, dst) ;
+        if( dst_vertex = undefined){
+        return 'Vertex not exists or not allowed.'
         }
+        
 
-        const edge = JSON.parse(edgeAsBytes.toString());
-        egde.perms = newPerms;
-
-        await ctx.stub.putPrivateData(collectionName , edgeId, Buffer.from(JSON.stringify(edge)));
-        console.info('============= END : changePermission ===========');
-    
+    //Cannot create edge apart from zone/org
+    if ( dst_vertex.owner != ctx.clientIdentity.getMSPID() ){
+      return 'No permission to create edge.'
     }
+    console.log( dst_vertex.owner , ctx.clientIdentity.getMSPID() )
 
-
-    //Add to chain to keep order with ids 
-    async getLastEdgeId (){
-        //TODO
-    }
-
-    //Add to chain to keep order with ids 
-    async updateLastEdgeId (){
-        //TODO
-    }
-
-    
-    async createVertice(ctx, id , type ) {
-    console.info('============= START : Create Vertice ===========');
-
-    const vertice = {
-        id,
-        type
+    const edge = {
+      type: 'edge',
+      id: edgeId,
+      src: src,
+      dst: dst,
+      data: perms,
+      owner: ctx.clientIdentity.getMSPID(),
     };
 
-    vertice.id = id;
-    vertice.type = type;
+   
+       await ctx.stub.putState(edgeKey, Buffer.from(JSON.stringify(edge)))
+  
+    console.info(`Edge ${edgeId} from ${src} to ${dst} has been added`);
+  
+  
+    }catch{
 
-    await ctx.stub.putState(id, Buffer.from(JSON.stringify(vertice)));
-
-    console.info('============= END : create Vertice ===========');
     }
-    
-    async createEdge(ctx, src ,dst , perms ) {
-      const edge = {
-          src,
-          dst,
-          perms
-      };
+}
+     
 
-      edge.src = src;
-      edge.dst = dst;
-      edge.perms = perms;
-
-
-      await ctx.stub.putState(id, Buffer.from(JSON.stringify(edge)));
-    }
 
     /**
      * Reads a graph from the ledger.
@@ -553,6 +274,140 @@ class PermissionGraph extends Contract {
         console.info(allResults);
         return JSON.stringify(allResults, null, 2);
     }
+
+
+    async queryAllVertices(ctx) {
+      const iterator = await ctx.stub.getStateByPartialCompositeKey('vertex', []);
+  
+      const allResults = [];
+  
+      while (true) {
+          const res = await iterator.next();
+          if (res.value && res.value.value.toString()) {
+              const strValue = res.value.value.toString();
+              let record;
+              try {
+                  record = JSON.parse(strValue);
+              } catch (err) {
+                  console.log(err);
+                  record = strValue;
+              }
+              allResults.push(record);
+          }
+          if (res.done) {
+              await iterator.close();
+              return allResults;
+          }
+      }
+  }
+  
+  async queryVertex(ctx , vertexId) {
+    const vertexKey = ctx.stub.createCompositeKey('vertex', [vertexId]);
+    const vertexAsBytes = await ctx.stub.getState( vertexKey);
+   
+    if (!vertexAsBytes || vertexAsBytes.length === 0) {
+        throw new Error(`${vertexId} does not exist in graph`);
+    }
+ 
+    const peerMSPID = ctx.stub.getMspID();
+
+    const vertex = JSON.parse(vertexAsBytes);
+    if (peerMSPID == vertex.owner){
+        return vertex;
+    }
+    else{
+        return 'No permission.'
+    }
+}
+
+
+  async queryAllEdges(ctx) {
+    const iterator = await ctx.stub.getStateByPartialCompositeKey('edge', []);
+  
+    const allResults = [];
+
+    while (true) {
+        const res = await iterator.next();
+        if (res.value && res.value.value.toString()) {
+            const strValue = res.value.value.toString();
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push(record);
+        }
+        if (res.done) {
+            await iterator.close();
+            return allResults;
+        }
+    }
+  }
+
+  async findPathAndConcatPerms(ctx, startVertexId, endVertexId) {
+    if (!startVertexId || !endVertexId) {
+        throw new Error('startVertexId and endVertexId must be non-empty');
+    }
+
+    // Znajdź wszystkie krawędzie
+    const edgesIterator = await ctx.stub.getStateByPartialCompositeKey('edge', []);
+    const edges = [];
+    while (true) {
+        const res = await edgesIterator.next();
+        if (res.value && res.value.value.toString()) {
+            const edge = JSON.parse(res.value.value.toString());
+            edges.push(edge);
+        }
+        if (res.done) {
+            await edgesIterator.close();
+            break;
+        }
+    }
+
+    // Znajdź ścieżkę pomiędzy startVertexId i endVertexId
+    const visited = new Set();
+    const stack = [[startVertexId, "10011"]];
+
+    while (stack.length > 0) {
+        const [currentVertex, currentPerms] = stack.pop();
+        console.log(currentVertex, currentPerms );
+        if (currentVertex === endVertexId) {
+            return currentPerms;
+        }
+        if (!visited.has(currentVertex)) {
+            visited.add(currentVertex);
+
+            for (const edge of edges) {
+                if (edge.src === currentVertex && !visited.has(edge.dst)) {
+                  console.log(edge)
+                    stack.push([edge.dst, this.bitwiseConcat(currentPerms, edge.data)]);
+                }
+            }
+        }
+    }
+
+    throw new Error(`No path found from ${startVertexId} to ${endVertexId}`);
+}
+
+bitwiseConcat(perms1, perms2) {
+    console.log(perms1, perms2);
+    if (!perms1) return perms2;
+    if (!perms2) return perms1;
+   
+    const maxLength = Math.max(perms1.length, perms2.length);
+    const result = [];
+
+    for (let i = 0; i < maxLength; i++) {
+        const bit1 = perms1[i] ? perms1[i] : '0';
+        const bit2 = perms2[i] ? perms2[i] : '0';
+        console.log(bit1, bit2);
+        result.push(bit1 === '1' && bit2 === '1' ? '1' : '0');
+    }
+
+    return result.join('');
+}
 
 }
 
