@@ -30,7 +30,7 @@ class PermissionGraph extends Contract {
     */
     async changePermission(ctx, edgeId , newPerms) {
         const edgeKey = ctx.stub.createCompositeKey('edge', [edgeId]);
-
+        console.log(edgeKey);
         const edgeAsBytes = await ctx.stub.getState( edgeKey);
         if (!edgeAsBytes || edgeAsBytes.length === 0) {
             throw new Error(`${edgeId} does not exist in graph`);
@@ -49,7 +49,7 @@ class PermissionGraph extends Contract {
      
 
         await ctx.stub.putState(edgeKey, Buffer.from(JSON.stringify(edge)));
-        console.info(`Edge ${edgeId} permissions has been updated`);
+        return `Edge ${edgeId} permissions has been updated`;
     
     }
 
@@ -251,29 +251,37 @@ class PermissionGraph extends Contract {
         }
     }
 
-    // Find path between startVertexId and endVertexId
+    // Find all paths between startVertexId and endVertexId and sum permissions
     const visited = new Set();
-    const stack = [[startVertexId]];
+    let totalPermissions = 0;
+
+    const stack = [[startVertexId, 0]];
 
     while (stack.length > 0) {
         const [currentVertex, currentPerms] = stack.pop();
-        console.log(currentVertex, currentPerms );
+
         if (currentVertex === endVertexId) {
-            return currentPerms;
+            totalPermissions = this.bitwiseConcat(totalPermissions, currentPerms);
         }
+
         if (!visited.has(currentVertex)) {
             visited.add(currentVertex);
 
             for (const edge of edges) {
                 if (edge.src === currentVertex && !visited.has(edge.dst)) {
-                
                     stack.push([edge.dst, this.bitwiseConcat(currentPerms, edge.data)]);
                 }
             }
+
+            visited.delete(currentVertex);
         }
     }
 
-    throw new Error(`No path found from ${startVertexId} to ${endVertexId}`);
+        if (totalPermissions === 0) {
+            throw new Error(`No path found from ${startVertexId} to ${endVertexId}`);
+        }
+
+        return totalPermissions;
     }
 
     
