@@ -357,7 +357,7 @@ done
 #       "dst": "zone1:IsaiasCape",
 #       "perms": "10100"
 #     }]}'
-setGlobalsForPeer0Org2
+setGlobalsForPeer0Org1
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "createVertex", "Args":["1" , "u"]}'
 # Pętla przetwarzająca wierzchołki
 echo "$json" | jq -c '.vertices[]' | while read -r vertex; 
@@ -417,15 +417,14 @@ done
 
 setGlobalsForPeer0Org2
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "createEdge", "Args":[ "20" , "zone1:blair.bednar" , "zone0:et_praesentium"  , "10111"]}'
-  
-peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAndConcatPerms", "Args":[ "zone1:lyman.leuschke", "zone1:et_praesentium"]}'
 
-peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAndConcatPerms", "Args":[ "zone1:et_praesentium", "zone1:IsaiasCape"]}'
+echo '{"function": "findPathAndConcatPerms", "Args":[ "zone1:lyman.leuschke", "zone1:IsaiasCape"]}'
+peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAndConcatPerms", "Args":[ "zone1:lyman.leuschke", "zone1:IsaiasCape"]}'
 
-peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryVertex", "Args":[ "zone1:et_praesentium"]}'
+#peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAndConcatPerms", "Args":[ "zone1:et_praesentium", "zone1:IsaiasCape"]}'
+#peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryVertex", "Args":[ "zone1:et_praesentium"]}'
 
 
-peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "queryEdge", "Args":[ "zone1:et_praesentium"]}'
-
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "changePermission", "Args":[ "15" ,  "11000"]}'
+echo '{"function": "changePermission", "Args":[ "14" ,  "11001"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "changePermission", "Args":[ "14" ,  "11001"]}'
   

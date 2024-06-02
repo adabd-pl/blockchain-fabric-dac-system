@@ -35,14 +35,13 @@ class PermissionGraph extends Contract {
         if (!edgeAsBytes || edgeAsBytes.length === 0) {
             throw new Error(`${edgeId} does not exist in graph`);
         }
-     
+        
        
        
         const edge = JSON.parse(edgeAsBytes);
-
+        console.log(edge);
         if (edge.owner !== ctx.clientIdentity.getMSPID()  ) {
-            return new Error(`You do not have permission.`);
-            
+            return 'You dont have permission.';
         }
         edge.data = newPerms;
         console.log('Edge: ' + JSON.stringify(edge) +' permission: ' + edge.data);
@@ -77,7 +76,7 @@ class PermissionGraph extends Contract {
      * @param {Context} ctx - The transaction context.
      * @param {String} edgeId - id of vertice
      * @param {String} src - source of edge
-     * @param {String} dst - destincation of edge
+     * @param {String} dst - destination of edge
      * @param {String} perms - permissions for edge
     */
     async createEdge(ctx, edgeId ,src ,dst , perms ) {
@@ -261,7 +260,7 @@ class PermissionGraph extends Contract {
         const [currentVertex, currentPerms] = stack.pop();
 
         if (currentVertex === endVertexId) {
-            totalPermissions = this.bitwiseConcat(totalPermissions, currentPerms);
+            totalPermissions |= currentPerms;
         }
 
         if (!visited.has(currentVertex)) {
