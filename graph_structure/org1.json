@@ -1,0 +1,90 @@
+{
+    "vertices": [
+      {
+        "id": "zone0:wyatt.feest",
+        "type": "user"
+      },
+      {
+        "id": "zone0:emory.skiles",
+        "type": "user"
+      },
+      {
+        "id": "zone0:Murrayville",
+        "type": "provider"
+      },
+      {
+        "id": "zone0:earle.bauch",
+        "type": "user"
+      },
+      {
+        "id": "zone0:terrell.koch",
+        "type": "user"
+      },
+      {
+        "id": "zone0:sid.lindgren",
+        "type": "user"
+      },
+      {
+        "id": "zone0:edmund.lesch",
+        "type": "user"
+      },
+      {
+        "id": "zone0:rodger.crooks",
+        "type": "user"
+      },
+      {
+        "id": "zone0:GuyPlain",
+        "type": "space"
+      },
+      {
+        "id": "zone0:gregorio.hodkiewicz",
+        "type": "user"
+      },
+      {
+        "id": "zone0:nicolas.vonrueden",
+        "type": "user"
+      }
+    ],
+    "edges": [
+      {
+        "src": "zone0:sid.lindgren",
+        "dst": "zone0:GuyPlain",
+        "perms": "01000"
+      },
+      {
+        "src": "zone0:rodger.crooks",
+        "dst": "zone0:GuyPlain",
+        "perms": "10111"
+      },
+      {
+        "src": "zone0:edmund.lesch",
+        "dst": "zone0:GuyPlain",
+        "perms": "10110"
+      },
+      {
+        "src": "zone0:earle.bauch",
+        "dst": "zone0:GuyPlain",
+        "perms": "01011"
+      },
+      {
+        "src": "zone0:terrell.koch",
+        "dst": "zone0:GuyPlain",
+        "perms": "01001"
+      },
+      {
+        "src": "zone0:nicolas.vonrueden",
+        "dst": "zone0:earle.bauch",
+        "perms": "11010"
+      },
+      {
+        "src": "zone0:wyatt.feest",
+        "dst": "zone0:GuyPlain",
+        "perms": "11111"
+      },
+      {
+        "src": "zone0:gregorio.hodkiewicz",
+        "dst": "zone0:GuyPlain",
+        "perms": "10100"
+      }
+    ]
+  }

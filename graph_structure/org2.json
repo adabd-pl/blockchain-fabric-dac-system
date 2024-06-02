@@ -1,0 +1,160 @@
+{
+    "vertices": [
+      {
+        "id": "zone1:theola.gusikowski",
+        "type": "user"
+      },
+      {
+        "id": "zone1:BrianTurnpike",
+        "type": "space"
+      },
+      {
+        "id": "zone1:lyman.leuschke",
+        "type": "user"
+      },
+      {
+        "id": "zone1:et_praesentium",
+        "type": "group"
+      },
+      {
+        "id": "zone1:lois.ohara",
+        "type": "user"
+      },
+      {
+        "id": "zone1:saepe_aut",
+        "type": "group"
+      },
+      {
+        "id": "zone1:IsaiasCape",
+        "type": "space"
+      },
+      {
+        "id": "zone1:donte.hackett",
+        "type": "user"
+      },
+      {
+        "id": "zone1:monty.ward",
+        "type": "user"
+      },
+      {
+        "id": "zone1:karl.mertz",
+        "type": "user"
+      },
+      {
+        "id": "zone1:jerold.murray",
+        "type": "user"
+      },
+      {
+        "id": "zone1:norman.roob",
+        "type": "user"
+      },
+      {
+        "id": "zone1:danna.waters",
+        "type": "user"
+      },
+      {
+        "id": "zone1:dalila.mclaughlin",
+        "type": "user"
+      },
+      {
+        "id": "zone1:blair.bednar",
+        "type": "user"
+      },
+      {
+        "id": "zone1:rachelle.feest",
+        "type": "user"
+      }
+    ],
+    "edges": [
+      {
+        "src": "zone1:danna.waters",
+        "dst": "zone1:saepe_aut",
+        "perms": "11100"
+      },
+      {
+        "src": "zone1:norman.roob",
+        "dst": "zone1:saepe_aut",
+        "perms": "00100"
+      },
+      {
+        "src": "zone1:karl.mertz",
+        "dst": "zone1:et_praesentium",
+        "perms": "01111"
+      },
+      {
+        "src": "zone1:lois.ohara",
+        "dst": "zone1:et_praesentium",
+        "perms": "01001"
+      },
+      {
+        "src": "zone1:saepe_aut",
+        "dst": "zone1:IsaiasCape",
+        "perms": "11000"
+      },
+      {
+        "src": "zone1:rachelle.feest",
+        "dst": "zone1:IsaiasCape",
+        "perms": "11000"
+      },
+      {
+        "src": "zone0:emory.skiles",
+        "dst": "zone1:et_praesentium",
+        "perms": "10100"
+      },
+      {
+        "src": "zone1:theola.gusikowski",
+        "dst": "zone1:IsaiasCape",
+        "perms": "00101"
+      },
+      {
+        "src": "zone1:lyman.leuschke",
+        "dst": "zone1:et_praesentium",
+        "perms": "10000"
+      },
+      {
+        "src": "zone1:monty.ward",
+        "dst": "zone1:saepe_aut",
+        "perms": "10010"
+      },
+      {
+        "src": "zone1:lyman.leuschke",
+        "dst": "zone1:saepe_aut",
+        "perms": "10101"
+      },
+      {
+        "src": "zone1:jerold.murray",
+        "dst": "zone1:IsaiasCape",
+        "perms": "00100"
+      },
+      {
+        "src": "zone1:et_praesentium",
+        "dst": "zone1:IsaiasCape",
+        "perms": "10111"
+      },
+      {
+        "src": "zone1:IsaiasCape",
+        "dst": "zone0:Murrayville",
+        "perms": "00111"
+      },
+      {
+        "src": "zone1:donte.hackett",
+        "dst": "zone1:IsaiasCape",
+        "perms": "01010"
+      },
+      {
+        "src": "zone1:dalila.mclaughlin",
+        "dst": "zone1:et_praesentium",
+        "perms": "00110"
+      },
+      {
+        "src": "zone1:blair.bednar",
+        "dst": "zone0:et_praesentium",
+        "perms": "10111"
+      } ,
+      {
+        "src": "zone1:blair.bednar",
+        "dst": "zone0:et_praesentium",
+        "perms": "10111"
+      }
+    ]
+  }

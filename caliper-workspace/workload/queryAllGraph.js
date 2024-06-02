@@ -23,9 +23,8 @@ class QueryAllGraphWorkload extends WorkloadModuleBase {
       
         const request = {
             contractId: this.roundArguments.contractId,
-            contractFunction: 'queryGraphFromCollection',
+            contractFunction: 'queryGraph',
             invokerIdentity: 'User1',
-            contractArguments: ['Org1Org2MSPPrivateCollection'],
             readOnly: false
         };
         

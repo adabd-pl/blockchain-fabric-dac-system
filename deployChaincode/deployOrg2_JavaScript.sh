@@ -117,6 +117,29 @@ lifecycleCommands() {
   sleep 2
   
   echo " "
+  echo "========================== GET INFO FOR CHAIN ==========================="
+  echo " "
+  
+  getblock
+  checkCommitReadyness
+  sleep 2
+
+  echo " "
+  echo "========================== COMMIT CHAINCODE ============================="
+  echo " "
+  
+  commitChaincodeDefination
+  sleep 2
+
+  echo " "
+  echo "============================ QUERY COMMITED ============================="
+  echo " "
+  
+  queryCommitted
+  sleep 2
+  
+
+  echo " "
   echo "========================== INSTALLED PACKAGE  =========================="
   echo " "
   
@@ -127,7 +150,7 @@ lifecycleCommands() {
   echo "============================ APPROVE FOR ORG ============================"
   approveForMyOrg2
   sleep 2
-  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051   --tlsRootCertFiles $PEER0_ORG1_CA --isInit -c '{"function": "initLedger","Args":[]}'
+  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA --channelID $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051   --tlsRootCertFiles $PEER0_ORG2_CA --isInit -c '{"function": "initLedger","Args":[]}'
 
 }
 getInstallChaincodes() {

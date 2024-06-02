@@ -4,12 +4,12 @@ test:
     number: 1
   rounds:
     - label: Change permission.
-      txNumber: 10  #transaction duration 
+      txNumber: 30  #transactions number 
       rateControl:
           type: fixed-rate
           opts:
             tps: 100
-            #transactionLoad: 1
+            transactionLoad: 100
       workload:
         module: workload/changePermission.js
         arguments:
@@ -27,7 +27,7 @@ test:
         arguments:
           assets: 10
           contractId:  permissiongraph
-    - label: Query vertice.
+    - label: Query permissions.
       txDuration: 100  #transaction duration 
       rateControl:
           type: fixed-load

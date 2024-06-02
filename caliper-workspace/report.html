@@ -136,7 +136,7 @@
                 <li><a href="#benchmarksummary">Summary</a></li>
                     <li><a href="#Change permission.">Change permission.</a></li>
                     <li><a href="#Query graph.">Query graph.</a></li>
-                    <li><a href="#Query vertice.">Query vertice.</a></li>
+                    <li><a href="#Query permissions.">Query permissions.</a></li>
             </ul>
             <ul>
                 <h3>&nbspSystem under test</h3>
@@ -154,13 +154,13 @@
                     </tr>
 
                     <tr>
-                         <td>Change permission.</td> <td>10</td> <td>0</td> <td>55.9</td> <td>0.34</td> <td>0.16</td> <td>0.25</td> <td>29.5</td>
+                         <td>Change permission.</td> <td>30</td> <td>0</td> <td>95.2</td> <td>0.35</td> <td>0.19</td> <td>0.28</td> <td>54.4</td>
                     </tr>
                     <tr>
-                         <td>Query graph.</td> <td>2865</td> <td>0</td> <td>28.5</td> <td>7.95</td> <td>0.09</td> <td>2.46</td> <td>28.1</td>
+                         <td>Query graph.</td> <td>5762</td> <td>0</td> <td>57.6</td> <td>2.77</td> <td>0.13</td> <td>1.13</td> <td>56.7</td>
                     </tr>
                     <tr>
-                         <td>Query vertice.</td> <td>9845</td> <td>0</td> <td>98.6</td> <td>2.28</td> <td>0.10</td> <td>0.62</td> <td>96.5</td>
+                         <td>Query permissions.</td> <td>2839</td> <td>0</td> <td>28.4</td> <td>6.34</td> <td>0.20</td> <td>2.55</td> <td>28.3</td>
                     </tr>
                 </table>
             </div>
@@ -171,6 +171,7 @@
   type: fixed-rate
   opts:
     tps: 100
+    transactionLoad: 100
 </pre>
                         <h3>Performance metrics for Change permission.</h3>
                             <table style="min-width: 100%;">
@@ -178,7 +179,7 @@
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>Change permission.</td> <td>10</td> <td>0</td> <td>55.9</td> <td>0.34</td> <td>0.16</td> <td>0.25</td> <td>29.5</td>
+                                     <td>Change permission.</td> <td>30</td> <td>0</td> <td>95.2</td> <td>0.35</td> <td>0.19</td> <td>0.28</td> <td>54.4</td>
                                 </tr>
                             </table>
                         <h3>Resource utilization for Change permission.</h3>
@@ -200,14 +201,14 @@ rateControl:
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>Query graph.</td> <td>2865</td> <td>0</td> <td>28.5</td> <td>7.95</td> <td>0.09</td> <td>2.46</td> <td>28.1</td>
+                                     <td>Query graph.</td> <td>5762</td> <td>0</td> <td>57.6</td> <td>2.77</td> <td>0.13</td> <td>1.13</td> <td>56.7</td>
                                 </tr>
                             </table>
                         <h3>Resource utilization for Query graph.</h3>
             </div>
 
-            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="Query vertice.">
-                <h2>Benchmark round: Query vertice.</h2>
+            <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;" id="Query permissions.">
+                <h2>Benchmark round: Query permissions.</h2>
                 <p></p>
                 <pre style="overflow: visible;white-space: pre-wrap;max-height:100%;">txDuration: 100
 rateControl:
@@ -216,16 +217,16 @@ rateControl:
     tps: 100
     transactionLoad: 100
 </pre>
-                        <h3>Performance metrics for Query vertice.</h3>
+                        <h3>Performance metrics for Query permissions.</h3>
                             <table style="min-width: 100%;">
                                 <tr>
                                      <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
                                 </tr>
                                 <tr>
-                                     <td>Query vertice.</td> <td>9845</td> <td>0</td> <td>98.6</td> <td>2.28</td> <td>0.10</td> <td>0.62</td> <td>96.5</td>
+                                     <td>Query permissions.</td> <td>2839</td> <td>0</td> <td>28.4</td> <td>6.34</td> <td>0.20</td> <td>2.55</td> <td>28.3</td>
                                 </tr>
                             </table>
-                        <h3>Resource utilization for Query vertice.</h3>
+                        <h3>Resource utilization for Query permissions.</h3>
             </div>
 
             <div style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px;">
@@ -236,11 +237,12 @@ rateControl:
   number: 1
 rounds:
   - label: Change permission.
-    txNumber: 10
+    txNumber: 30
     rateControl:
       type: fixed-rate
       opts:
         tps: 100
+        transactionLoad: 100
     workload:
       module: workload&#x2F;changePermission.js
       arguments:
@@ -258,7 +260,7 @@ rounds:
       arguments:
         assets: 10
         contractId: permissiongraph
-  - label: Query vertice.
+  - label: Query permissions.
     txDuration: 100
     rateControl:
       type: fixed-load

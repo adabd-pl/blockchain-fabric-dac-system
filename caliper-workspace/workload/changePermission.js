@@ -1,8 +1,9 @@
 
-
 'use strict';
 
 const { WorkloadModuleBase } = require('@hyperledger/caliper-core');
+
+
 
 const perms = ['01001', '00111', '00111', '01110', '00001', '10111'];
 let txIndex = 0;
@@ -29,9 +30,11 @@ class ChangePermissionWorkload extends WorkloadModuleBase {
      * @async
      */
     async initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext) {
-        this.txIndex = 0;
         await super.initializeWorkloadModule(workerIndex, totalWorkers, roundIndex, roundArguments, sutAdapter, sutContext);
-        
+       
+        this.txIndex = 0;
+       
+           
    }
 
     /**
@@ -42,18 +45,17 @@ class ChangePermissionWorkload extends WorkloadModuleBase {
         this.txIndex = this.txIndex + 1;
         let newPerms = perms[Math.floor(Math.random() * perms.length)];
        
-        let edgeId = 'E' + this.txIndex.toString(); 
+        let edgeId = this.txIndex.toString(); 
 
+        console.log(edgeId,  newPerms);
         let args = {
             contractId: this.roundArguments.contractId,
             invokerIdentity: 'User1',
             contractFunction: 'changePermission',
-            contractArguments: [edgeId, 'Org1Org2MSPPrivateCollection' , newPerms  ],
+            contractArguments: [edgeId,  newPerms ],
             readOnly: false
         };
 
-
-        
         await this.sutAdapter.sendRequests(args);
     }
 }

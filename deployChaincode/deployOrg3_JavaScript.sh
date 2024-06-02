@@ -114,6 +114,30 @@ lifecycleCommands() {
   
   installChaincode
   sleep 3
+
+    
+  echo " "
+  echo "========================== GET INFO FOR CHAIN ==========================="
+  echo " "
+  
+  getblock
+  checkCommitReadyness
+  sleep 2
+
+  echo " "
+  echo "========================== COMMIT CHAINCODE ============================="
+  echo " "
+  
+  commitChaincodeDefination
+  sleep 2
+
+  echo " "
+  echo "============================ QUERY COMMITED ============================="
+  echo " "
+  
+  queryCommitted
+  sleep 2
+  
   
   echo " "
   echo "========================== INSTALLED PACKAGE  =========================="
