@@ -23,6 +23,6 @@ organizations:
           path: ../org1/crypto-config-ca/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
    
     connectionProfile:
-      path: '../org1/connection-profile-org1.yaml'
+      path: '../connection-profile.yaml'
    
 

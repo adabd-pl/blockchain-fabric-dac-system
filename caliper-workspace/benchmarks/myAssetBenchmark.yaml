@@ -4,11 +4,11 @@ test:
     number: 1
   rounds:
     - label: Change permission.
-      txNumber: 30  #transactions number 
+      txDuration: 100   #transactions number 
       rateControl:
           type: fixed-rate
           opts:
-            tps: 100
+            tps: 60
             transactionLoad: 100
       workload:
         module: workload/changePermission.js

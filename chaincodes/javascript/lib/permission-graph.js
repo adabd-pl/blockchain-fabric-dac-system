@@ -184,7 +184,7 @@ class PermissionGraph extends Contract {
             throw new Error(`${vertexId} does not exist in graph`);
         }
     
-        const peerMSPID = ctx.stub.getMspID();
+        const peerMSPID = ctx.clientIdentity.getMSPID();
 
         const vertex = JSON.parse(vertexAsBytes);
         if (peerMSPID == vertex.owner){

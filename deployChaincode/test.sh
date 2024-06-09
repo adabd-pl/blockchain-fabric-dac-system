@@ -167,8 +167,9 @@ echo "$json" | jq -c '.vertices[]' | while read -r vertex;
 do
   id=$(echo "$vertex" | jq -r '.id')
   type=$(echo "$vertex" | jq -r '.type')
-  #echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
+  #
   if [[ $id == *"zone0"* ]]; then
+  echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   fi
 done
@@ -357,7 +358,7 @@ done
 #       "dst": "zone1:IsaiasCape",
 #       "perms": "10100"
 #     }]}'
-setGlobalsForPeer0Org1
+setGlobalsForPeer0Org2
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME}  -c '{"function": "createVertex", "Args":["1" , "u"]}'
 # Pętla przetwarzająca wierzchołki
 echo "$json" | jq -c '.vertices[]' | while read -r vertex; 
@@ -365,8 +366,9 @@ do
   id=$(echo "$vertex" | jq -r '.id')
   type=$(echo "$vertex" | jq -r '.type')
   type=$(echo "$vertex" | jq -r '.id')
-  #echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
+  
   if [[ $id == *"zone1"* ]]; then
+  echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   fi
 done
@@ -393,8 +395,9 @@ do
   id=$(echo "$vertex" | jq -r '.id')
   type=$(echo "$vertex" | jq -r '.type')
   type=$(echo "$vertex" | jq -r '.id')
-  #echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
+  
   if [[ $id == *"zone2"* ]]; then
+  echo  '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:11051 --tlsRootCertFiles $PEER0_ORG3_CA -c '{"function": "createVertex", "Args":[ "'${id}'" , "'${type}'"]}'
   fi
 done
@@ -413,10 +416,11 @@ echo "$json" | jq -c '.edges[]' | while read -r edge; do
 done 
 }
 
-#generateGraph
+generateGraph
 
 setGlobalsForPeer0Org2
 #peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"function": "createEdge", "Args":[ "20" , "zone1:blair.bednar" , "zone0:et_praesentium"  , "10111"]}'
+
 
 echo '{"function": "findPathAndConcatPerms", "Args":[ "zone1:lyman.leuschke", "zone1:IsaiasCape"]}'
 peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAndConcatPerms", "Args":[ "zone1:lyman.leuschke", "zone1:IsaiasCape"]}'
@@ -426,5 +430,6 @@ peer chaincode query -C $CHANNEL_NAME -n ${CC_NAME} -c '{"function": "findPathAn
 
 
 echo '{"function": "changePermission", "Args":[ "14" ,  "11001"]}'
+
 peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles $PEER0_ORG2_CA -c '{"function": "changePermission", "Args":[ "14" ,  "11001"]}'
   
